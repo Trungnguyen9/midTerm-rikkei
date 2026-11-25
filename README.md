@@ -76,3 +76,35 @@ Mặc định giao diện chạy tại `http://localhost:5173`.
 4. **Cơ sở dữ liệu**: Thư mục `db/` hiện có `rikkei_lab.sql` (schema) và `seed.sql` (dữ liệu mẫu), không có file `schema.sql` tách riêng; toàn bộ bảng và cột giữ nguyên theo `db/rikkei_lab.sql`.
 5. **Xem chi tiết thiết bị**: `giao_dien_mau/index.html` chỉ có nút `Sửa` và `Xóa`, nên đã bổ sung nút `Chi tiết` mở modal gọi `GET /api/equipments/:id` mà không thay đổi bố cục bảng chính.
 
+## Phân tích Part 2:
+- Yêu cầu của khách hàng được mô tả có 3 bài toán nghiệp vụ rõ ràng:
+1. Thiết bị được mượn nhiều: Ban quản lý muốn xác định thiết bị nào có nhu cầu sử dụng cao.
+2. Thiết bị nằm kho: Xác định những thiết bị còn tồn nhưng ít hoặc không được sử dụng.
+3. Xu hướng mượn theo tháng: Theo dõi tình hình mượn thiết bị theo thời gian để nhận biết xu hướng sử dụng.
+
+- Giả định nghiệp vụ:
+Lượt mượn được xác định dựa trên borrowings.borrowed_at, không phụ thuộc vào trạng thái trả thiết bị.
+
+Thiết bị được mượn nhiều được xếp hạng dựa trên tổng quantity đã mượn trong khoảng thời gian thống kê. Nếu bằng nhau, ưu tiên thiết bị có nhiều phiếu mượn hơn.
+
+Thiết bị tồn kho là thiết bị có total_quantity > 0 nhưng không phát sinh phiếu mượn trong khoảng thời gian được chọn. Hệ thống vẫn hiển thị số lượng hiện còn có thể cho mượn.
+
+Xu hướng mượn theo tháng được tính bằng tổng số lượng thiết bị được mượn và số phiếu mượn phát sinh trong tháng.
+
+Khoảng thời gian thống kê tính cả ngày bắt đầu và ngày kết thúc. Mặc định hiển thị dữ liệu 12 tháng gần nhất.
+
+Các báo cáo chỉ phục vụ mục đích thống kê, không làm thay đổi dữ liệu thiết bị hoặc phiếu mượn.
+
+- Thiết kế bổ sung cơ sở dữ liệu:
+
+Bổ sung các API với method GET:
+"/api/reports/summary": Tổng quan thống kê: tổng lượt mượn, số lượng thiết bị đã mượn, thiết bị tồn kho
+
+"/api/reports/top-equipments": Danh sách thiết bị được mượn nhiều nhất
+
+"/api/reports/idle-equipments": Danh sách thiết bị không được mượn trong kỳ
+
+"/api/reports/monthly-trend": Thống kê số lượng và số phiếu mượn trong tháng
+  
+
+
