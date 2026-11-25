@@ -1,0 +1,177 @@
+@baseUrl = http://localhost:3000/api
+
+### 0. Health check
+GET {{baseUrl}}/health
+
+### ==========================================
+### THIẾT BỊ (EQUIPMENTS)
+### ==========================================
+
+### 1. Danh sách thiết bị (mặc định page=1, limit=10)
+GET {{baseUrl}}/equipments
+
+### 2. Tìm kiếm thiết bị theo tên hoặc mã
+GET {{baseUrl}}/equipments?search=Dell
+
+### 3. Lọc thiết bị theo loại (laptop | man_hinh | mach_dien_tu | phu_kien)
+GET {{baseUrl}}/equipments?category=laptop
+
+### 4. Phân trang thiết bị
+GET {{baseUrl}}/equipments?page=2&limit=5
+
+### 5. Chi tiết thiết bị
+GET {{baseUrl}}/equipments/1
+
+### 6. Thêm thiết bị mới (201 Created)
+POST {{baseUrl}}/equipments
+Content-Type: application/json
+
+{
+  "code": "lab-099",
+  "name": "Máy chiếu Epson EB-X06",
+  "category": "phu_kien",
+  "totalQuantity": 4
+}
+
+### 7. Thêm thiết bị trùng mã -> 409 DUPLICATE_CODE
+POST {{baseUrl}}/equipments
+Content-Type: application/json
+
+{
+  "code": "LAB-001",
+  "name": "Trùng mã",
+  "category": "laptop",
+  "totalQuantity": 2
+}
+
+### 8. Sửa thiết bị hợp lệ -> 200 OK
+PUT {{baseUrl}}/equipments/11
+Content-Type: application/json
+
+{
+  "code": "LAB-011",
+  "name": "Cáp HDMI 2 mét (loại tốt)",
+  "category": "phu_kien",
+  "totalQuantity": 30
+}
+
+### 9. Sửa tổng số lượng thấp hơn số đang mượn -> 409 INSUFFICIENT_QUANTITY
+# (LAB-001 id=1 đang có 3 thiết bị đang mượn/quá hạn chưa trả trong seed.sql)
+PUT {{baseUrl}}/equipments/1
+Content-Type: application/json
+
+{
+  "code": "LAB-001",
+  "name": "Laptop Dell Latitude 5420",
+  "category": "laptop",
+  "totalQuantity": 1
+}
+
+### 10. Xóa thiết bị chưa có phiếu mượn -> 204 No Content
+# (LAB-012 id=12 không có phiếu mượn trong seed.sql)
+DELETE {{baseUrl}}/equipments/12
+
+### 11. Xóa thiết bị đã có phiếu mượn -> 409 EQUIPMENT_HAS_BORROWINGS
+DELETE {{baseUrl}}/equipments/1
+
+### ==========================================
+### PHIẾU MƯỢN (BORROWINGS)
+### ==========================================
+
+### 12. Danh sách tất cả phiếu mượn
+GET {{baseUrl}}/borrowings
+
+### 13. Lọc phiếu mượn theo 3 trạng thái
+GET {{baseUrl}}/borrowings?status=borrowing
+
+###
+GET {{baseUrl}}/borrowings?status=overdue
+
+###
+GET {{baseUrl}}/borrowings?status=returned
+
+### 14. Tạo phiếu mượn hợp lệ -> 201 Created
+# Lưu ý: thay dueDate bằng ngày trong khoảng [hôm nay, hôm nay + 14 ngày]
+POST {{baseUrl}}/borrowings
+Content-Type: application/json
+
+{
+  "equipmentId": 11,
+  "borrowerName": "Nguyễn Minh Tuấn",
+  "quantity": 2,
+  "dueDate": "2026-11-30",
+  "note": "Mượn test API"
+}
+
+### 15. Tạo phiếu mượn vượt số lượng còn lại -> 409 INSUFFICIENT_QUANTITY
+POST {{baseUrl}}/borrowings
+Content-Type: application/json
+
+{
+  "equipmentId": 11,
+  "borrowerName": "Nguyễn Minh Tuấn",
+  "quantity": 999,
+  "dueDate": "2026-11-30"
+}
+
+### 16. Tạo phiếu mượn với quantity = 0 -> 400 VALIDATION_ERROR
+POST {{baseUrl}}/borrowings
+Content-Type: application/json
+
+{
+  "equipmentId": 11,
+  "borrowerName": "Nguyễn Minh Tuấn",
+  "quantity": 0,
+  "dueDate": "2026-11-30"
+}
+
+### 17. Tạo phiếu mượn thiếu tên người mượn -> 400 VALIDATION_ERROR
+POST {{baseUrl}}/borrowings
+Content-Type: application/json
+
+{
+  "equipmentId": 11,
+  "borrowerName": "   ",
+  "quantity": 1,
+  "dueDate": "2026-11-30"
+}
+
+### 18. Tạo phiếu mượn cho thiết bị không tồn tại -> 404 NOT_FOUND
+POST {{baseUrl}}/borrowings
+Content-Type: application/json
+
+{
+  "equipmentId": 99999,
+  "borrowerName": "Nguyễn Minh Tuấn",
+  "quantity": 1,
+  "dueDate": "2026-11-30"
+}
+
+### 19. Tạo phiếu mượn hạn trả > 14 ngày -> 400 INVALID_DUE_DATE
+POST {{baseUrl}}/borrowings
+Content-Type: application/json
+
+{
+  "equipmentId": 11,
+  "borrowerName": "Nguyễn Minh Tuấn",
+  "quantity": 1,
+  "dueDate": "2026-12-25"
+}
+
+### 20. Tạo phiếu mượn hạn trả trước ngày mượn -> 400 INVALID_DUE_DATE
+POST {{baseUrl}}/borrowings
+Content-Type: application/json
+
+{
+  "equipmentId": 11,
+  "borrowerName": "Nguyễn Minh Tuấn",
+  "quantity": 1,
+  "dueDate": "2020-01-01"
+}
+
+### 21. Trả thiết bị thành công -> 200 OK
+PATCH {{baseUrl}}/borrowings/1/return
+
+### 22. Trả thiết bị hai lần -> 409 ALREADY_RETURNED
+PATCH {{baseUrl}}/borrowings/1/return
+
