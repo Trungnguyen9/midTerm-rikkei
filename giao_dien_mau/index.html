@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Thiết bị - Rikkei Lab</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+<!-- ===== Component: AppNavbar ===== -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container">
+    <a class="navbar-brand fw-bold" href="index.html">Rikkei Lab</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainMenu"><span class="navbar-toggler-icon"></span></button>
+    <div class="collapse navbar-collapse" id="mainMenu">
+      <ul class="navbar-nav me-auto">
+        <li class="nav-item"><a class="nav-link active" href="index.html">Thiết bị</a></li>
+        <li class="nav-item"><a class="nav-link" href="phieu-muon.html">Phiếu mượn</a></li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Mở rộng (Phần 2)</a>
+          <ul class="dropdown-menu"><li><a class="dropdown-item" href="mo_rong/a-tien-phat.html">A. Quá hạn và tiền phạt</a></li><li><a class="dropdown-item" href="mo_rong/b-thong-ke.html">B. Thống kê và báo cáo</a></li><li><a class="dropdown-item" href="mo_rong/c-dat-truoc.html">C. Đặt trước và hàng chờ</a></li><li><a class="dropdown-item" href="mo_rong/d-tai-khoan.html">D. Tài khoản và phân quyền</a></li></ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<!-- ===== Hết: AppNavbar ===== -->
+
+<main class="container py-4">
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h1 class="h4 mb-0">Quản lý thiết bị</h1>
+</div>
+
+<!-- ===== Component: EquipmentToolbar ===== -->
+<div class="row g-2 mb-3">
+  <div class="col-md-5"><input type="search" class="form-control" placeholder="Tìm theo tên hoặc mã" aria-label="Tìm thiết bị"></div>
+  <div class="col-md-4">
+    <select class="form-select" aria-label="Lọc theo loại">
+      <option selected>Tất cả loại</option><option>Laptop</option><option>Màn hình</option><option>Bo mạch điện tử</option><option>Phụ kiện</option>
+    </select>
+  </div>
+  <div class="col-md-3 text-md-end"><button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#equipmentModal">Thêm thiết bị</button></div>
+</div>
+<!-- ===== Hết: EquipmentToolbar ===== -->
+
+<!-- ===== Component: EquipmentTable ===== -->
+<div class="card">
+  <div class="table-responsive">
+    <table class="table table-hover align-middle mb-0">
+      <thead class="table-light">
+        <tr><th>Mã</th><th>Tên thiết bị</th><th>Loại</th><th class="text-end">Tổng</th><th class="text-end">Còn lại</th><th class="text-end">Thao tác</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="text-nowrap">LAB-001</td><td>Laptop Dell Latitude 5420</td><td>Laptop</td><td class="text-end">10</td>
+          <td class="text-end"><span class="badge text-bg-success">7</span></td>
+          <td class="text-end text-nowrap">
+            <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#equipmentModal">Sửa</button>
+            <button class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">Xóa</button>
+          </td>
+        </tr>
+        <tr>
+          <td class="text-nowrap">LAB-002</td><td>Laptop Lenovo ThinkPad E14</td><td>Laptop</td><td class="text-end">8</td>
+          <td class="text-end"><span class="badge text-bg-success">8</span></td>
+          <td class="text-end text-nowrap">
+            <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#equipmentModal">Sửa</button>
+            <button class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">Xóa</button>
+          </td>
+        </tr>
+        <tr>
+          <td class="text-nowrap">LAB-003</td><td>Màn hình LG 24 inch</td><td>Màn hình</td><td class="text-end">12</td>
+          <td class="text-end"><span class="badge text-bg-success">9</span></td>
+          <td class="text-end text-nowrap">
+            <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#equipmentModal">Sửa</button>
+            <button class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">Xóa</button>
+          </td>
+        </tr>
+        <tr>
+          <td class="text-nowrap">LAB-004</td><td>Màn hình Dell 27 inch</td><td>Màn hình</td><td class="text-end">6</td>
+          <td class="text-end"><span class="badge text-bg-danger">0</span></td>
+          <td class="text-end text-nowrap">
+            <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#equipmentModal">Sửa</button>
+            <button class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">Xóa</button>
+          </td>
+        </tr>
+        <tr>
+          <td class="text-nowrap">LAB-005</td><td>Bo mạch Arduino Uno R3</td><td>Bo mạch điện tử</td><td class="text-end">30</td>
+          <td class="text-end"><span class="badge text-bg-success">24</span></td>
+          <td class="text-end text-nowrap">
+            <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#equipmentModal">Sửa</button>
+            <button class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">Xóa</button>
+          </td>
+        </tr>
+        <tr>
+          <td class="text-nowrap">LAB-006</td><td>Raspberry Pi 4 (4GB)</td><td>Bo mạch điện tử</td><td class="text-end">15</td>
+          <td class="text-end"><span class="badge text-bg-success">11</span></td>
+          <td class="text-end text-nowrap">
+            <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#equipmentModal">Sửa</button>
+            <button class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">Xóa</button>
+          </td>
+        </tr>
+        <tr>
+          <td class="text-nowrap">LAB-007</td><td>Bàn phím cơ Keychron K2</td><td>Phụ kiện</td><td class="text-end">20</td>
+          <td class="text-end"><span class="badge text-bg-success">18</span></td>
+          <td class="text-end text-nowrap">
+            <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#equipmentModal">Sửa</button>
+            <button class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">Xóa</button>
+          </td>
+        </tr>
+        <tr>
+          <td class="text-nowrap">LAB-008</td><td>Chuột không dây Logitech</td><td>Phụ kiện</td><td class="text-end">25</td>
+          <td class="text-end"><span class="badge text-bg-success">22</span></td>
+          <td class="text-end text-nowrap">
+            <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#equipmentModal">Sửa</button>
+            <button class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">Xóa</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<!-- ===== Hết: EquipmentTable ===== -->
+
+<!-- ===== Component: Pagination ===== -->
+<div class="d-flex justify-content-between align-items-center mt-3">
+  <span class="text-muted small">Trang 1/3 · 24 thiết bị</span>
+  <nav>
+    <ul class="pagination pagination-sm mb-0">
+      <li class="page-item disabled"><a class="page-link" href="#">Trước</a></li>
+      <li class="page-item active"><a class="page-link" href="#">1</a></li>
+      <li class="page-item"><a class="page-link" href="#">2</a></li>
+      <li class="page-item"><a class="page-link" href="#">3</a></li>
+      <li class="page-item"><a class="page-link" href="#">Sau</a></li>
+    </ul>
+  </nav>
+</div>
+<!-- ===== Hết: Pagination ===== -->
+
+<!-- ===== Component: EquipmentFormModal ===== -->
+<div class="modal fade" id="equipmentModal" tabindex="-1">
+  <div class="modal-dialog">
+    <form class="modal-content">
+      <div class="modal-header"><h5 class="modal-title">Thêm thiết bị</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div>
+      <div class="modal-body">
+        <div class="mb-3"><label class="form-label" for="eqCode">Mã thiết bị</label><input id="eqCode" class="form-control" placeholder="LAB-009"></div>
+        <div class="mb-3"><label class="form-label" for="eqName">Tên thiết bị</label><input id="eqName" class="form-control"></div>
+        <div class="row">
+          <div class="col-md-7 mb-3"><label class="form-label" for="eqCat">Loại</label>
+            <select id="eqCat" class="form-select"><option>Laptop</option><option>Màn hình</option><option>Bo mạch điện tử</option><option>Phụ kiện</option></select></div>
+          <div class="col-md-5 mb-3"><label class="form-label" for="eqTotal">Tổng số lượng</label><input id="eqTotal" type="number" class="form-control" value="1"></div>
+        </div>
+      </div>
+      <div class="modal-footer"><button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button><button type="submit" class="btn btn-primary">Lưu</button></div>
+    </form>
+  </div>
+</div>
+<!-- ===== Hết: EquipmentFormModal ===== -->
+
+<!-- ===== Component: ConfirmDeleteModal ===== -->
+<div class="modal fade" id="deleteModal" tabindex="-1">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header"><h5 class="modal-title">Xóa thiết bị</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div>
+      <div class="modal-body">Bạn có chắc muốn xóa <strong>Laptop Dell Latitude 5420</strong>?</div>
+      <div class="modal-footer"><button class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button><button class="btn btn-danger">Xóa</button></div>
+    </div>
+  </div>
+</div>
+<!-- ===== Hết: ConfirmDeleteModal ===== -->
+
+<!-- ===== Bảng trạng thái (không phải màn hình thật) ===== -->
+<hr class="my-5">
+<h2 class="h5 text-muted">Bảng trạng thái</h2>
+<p class="text-muted small">Các trạng thái khác của giao diện, dùng để đối chiếu khi chuyển sang React.</p>
+<div class="row g-3"><div class="col-md-6"><div class="card h-100"><div class="card-header small text-muted">Đang tải</div><div class="card-body"><div class="text-center py-3"><div class="spinner-border text-primary" role="status"></div><div class="mt-2 text-muted">Đang tải dữ liệu...</div></div></div></div></div><div class="col-md-6"><div class="card h-100"><div class="card-header small text-muted">Không có dữ liệu</div><div class="card-body"><div class="text-center text-muted py-4">Không tìm thấy thiết bị nào.</div></div></div></div><div class="col-md-6"><div class="card h-100"><div class="card-header small text-muted">Lỗi tải dữ liệu</div><div class="card-body"><div class="alert alert-danger mb-0" role="alert">Không tải được danh sách thiết bị. Vui lòng thử lại.</div></div></div></div><div class="col-md-6"><div class="card h-100"><div class="card-header small text-muted">Lỗi trong form (ví dụ dữ liệu không hợp lệ)</div><div class="card-body"><div class="alert alert-danger py-2" role="alert">Dữ liệu không hợp lệ.</div><input class="form-control is-invalid" value=""><div class="invalid-feedback d-block">Vui lòng nhập tên thiết bị.</div></div></div></div></div>
+<!-- ===== Hết: Bảng trạng thái ===== -->
+</main>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

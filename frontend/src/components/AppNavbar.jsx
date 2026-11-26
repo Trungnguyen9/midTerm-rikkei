@@ -41,6 +41,15 @@ export default function AppNavbar() {
                 Phiếu mượn
               </NavLink>
             </li>
+            <li className="nav-item">
+              <NavLink
+                to="/reports"
+                className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}
+                onClick={() => setExpanded(false)}
+              >
+                Thống kê
+              </NavLink>
+            </li>
           </ul>
         </div>
       </div>

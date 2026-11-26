@@ -1,0 +1,65 @@
+### Reports API – Test cases
+### Base URL: http://localhost:3000/api/reports
+
+## ===== 1. Summary =====
+
+### 1.1 Summary – mặc định (12 tháng gần nhất)
+GET http://localhost:3000/api/reports/summary
+
+### 1.2 Summary – kỳ tùy chọn
+GET http://localhost:3000/api/reports/summary?from=2026-01-01&to=2026-11-26
+
+### 1.3 Summary – from > to -> INVALID_DATE_RANGE 400
+GET http://localhost:3000/api/reports/summary?from=2026-12-01&to=2026-01-01
+
+### 1.4 Summary – kỳ > 60 tháng -> INVALID_DATE_RANGE 400
+GET http://localhost:3000/api/reports/summary?from=2020-01-01&to=2026-11-26
+
+### 1.5 Summary – ngày không tồn tại -> VALIDATION_ERROR 400
+GET http://localhost:3000/api/reports/summary?from=2026-02-31
+
+### 1.6 Summary – định dạng sai -> VALIDATION_ERROR 400
+GET http://localhost:3000/api/reports/summary?from=abc
+
+
+## ===== 2. Top Equipments =====
+
+### 2.1 Top – mặc định
+GET http://localhost:3000/api/reports/top-equipments
+
+### 2.2 Top – limit=3
+GET http://localhost:3000/api/reports/top-equipments?limit=3
+
+### 2.3 Top – limit=0 -> VALIDATION_ERROR 400
+GET http://localhost:3000/api/reports/top-equipments?limit=0
+
+### 2.4 Top – limit=51 -> VALIDATION_ERROR 400
+GET http://localhost:3000/api/reports/top-equipments?limit=51
+
+### 2.5 Top – kỳ tùy chọn
+GET http://localhost:3000/api/reports/top-equipments?from=2026-01-01&to=2026-06-30&limit=5
+
+
+## ===== 3. Idle Equipments =====
+
+### 3.1 Idle – mặc định
+GET http://localhost:3000/api/reports/idle-equipments
+
+### 3.2 Idle – page 2
+GET http://localhost:3000/api/reports/idle-equipments?page=1&limit=5
+
+### 3.3 Idle – kỳ rất hẹp (1 ngày, có thể nhiều thiết bị idle)
+GET http://localhost:3000/api/reports/idle-equipments?from=2026-11-26&to=2026-11-26
+
+
+## ===== 4. Monthly Trend =====
+
+### 4.1 Trend – mặc định (12 tháng)
+GET http://localhost:3000/api/reports/monthly-trend
+
+### 4.2 Trend – 3 tháng
+GET http://localhost:3000/api/reports/monthly-trend?from=2026-09-01&to=2026-11-26
+
+### 4.3 Trend – from > to -> INVALID_DATE_RANGE 400
+GET http://localhost:3000/api/reports/monthly-trend?from=2027-01-01&to=2026-01-01
+
