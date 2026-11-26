@@ -105,6 +105,22 @@ Bổ sung các API với method GET:
 "/api/reports/idle-equipments": Danh sách thiết bị không được mượn trong kỳ
 
 "/api/reports/monthly-trend": Thống kê số lượng và số phiếu mượn trong tháng
-  
+
+- Các trường hợp biên:
+Khoảng thời gian không hợp lệ hoặc ngày bắt đầu lớn hơn ngày kết thúc: từ chối và trả thông báo lỗi.
+
+Không có phiếu mượn trong khoảng thời gian: trả danh sách rỗng và các chỉ số bằng 0.
+
+Có nhiều thiết bị có cùng số lượng mượn: sử dụng số phiếu mượn làm tiêu chí phụ để sắp xếp.
+
+Thiết bị chưa từng được mượn: vẫn xuất hiện trong danh sách thiết bị tồn kho nếu thỏa điều kiện.
+
+Thiết bị đã mượn hết: số lượng còn có thể cho mượn bằng 0, không được tính nhầm là còn hàng.
+
+Phiếu đã trả: vẫn được tính vào thống kê vì đây là lượt mượn đã phát sinh.
+
+Tháng không có lượt mượn: vẫn hiển thị giá trị 0 để biểu đồ không bị thiếu tháng.
+
+Không có dữ liệu thống kê: giao diện hiển thị trạng thái rỗng thay vì lỗi hoặc biểu đồ sai.
 
 
